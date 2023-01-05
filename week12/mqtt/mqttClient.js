@@ -6,7 +6,7 @@ export { Client }
  * Generates a new random clientId.
  * @returns {string}
  */
-const generateClientId = () => "clientId_webcl" ;//+ Math.random() * 1000;
+const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
 
 /**
  * A client to receive data from an MQTT broker.
