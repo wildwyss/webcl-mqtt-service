@@ -3,6 +3,12 @@ import { Paho } from "./lib/paho-mqtt.js";
 export { Client }
 
 /**
+ * Generates a new random clientId.
+ * @returns {string}
+ */
+const generateClientId = () => "clientId_webcl" ;//+ Math.random() * 1000;
+
+/**
  * A client to receive data from an MQTT broker.
  * @param  { !String } URL       - Uniform Resource Locator of the endpoint.
  * @param  { !Number } port      - The port, on which the broker is available.
@@ -20,16 +26,15 @@ export { Client }
  *    .catch( err => console.error(err));
  */
 const Client = (URL, port, topic, protocol = "/mqtt") =>
-
    new Promise((resolve, reject) => {
-
-    const mqttClient = new Paho.MQTT.Client(URL, port, protocol, "clientId_" + Math.random() * 100);
+    const mqttClient = new Paho.MQTT.Client(URL, port, protocol, generateClientId());
 
     const onConnect = () => mqttClient.subscribe(topic);
 
     const onConnectionLost = responseObject => {
+      // 0 is the ok error code
       if (0 !== responseObject.errorCode) {
-       reject("Connection Lost");
+        reject("Connection Lost");
       }
     };
 
