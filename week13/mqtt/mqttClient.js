@@ -4,21 +4,21 @@ export { Client }
 
 /**
  * @typedef Listener
- * @property { String }
- * @property { ListenerCallback }
+ * @property { String } topic               - The topic of the listener
+ * @property { ListenerCallback } callback  - Callback function for the notification
  */
 
 /**
  * @callback ListenerCallback
- * @param    { !String } topic
- * @return   { void }
+ * @param  { !String } topic -The topic on which the listener is notified
+ * @return { void }
  */
 
 /**
  * @typedef MqttClient
- * @property { (String) => void }                   subscribeToTopic
- * @property { (Listener) => void }                 removeListener
- * @property { (s:String, ListenerCallback) => Listener } addListener
+ * @property { (String) => void }   subscribeToTopic - Register a topic under a given text
+ * @property { (Listener) => void } removeListener   - Deletes a listener from the list
+ * @property { (s:String, ListenerCallback) => Listener } addListener - Adds a listener under a given topic
  */
 
 /**
