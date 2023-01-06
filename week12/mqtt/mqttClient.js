@@ -4,7 +4,7 @@ export { Client }
 
 /**
  * Generates a new random clientId.
- * @returns {string}
+ * @returns { String }
  */
 const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
 
@@ -26,6 +26,7 @@ const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
  *    .catch( err => console.error(err));
  */
 const Client = (URL, port, topic, protocol = "/mqtt") =>
+
    new Promise((resolve, reject) => {
     const mqttClient = new Paho.MQTT.Client(URL, port, protocol, generateClientId());
 

@@ -1,27 +1,27 @@
-import {Client} from "../../mqtt/mqttClient.js"
-import {toDeveloper, toProject} from "./jsonToModel.js";
+import { Client }                 from "../../mqtt/mqttClient.js"
+import { toDeveloper, toProject}  from "./jsonToModel.js";
 
 export { pepServices }
 
-
 /**
- * Concrete factory for remote, asynchronous {@link PepService} functions.
+ * Concrete factory for remote, asynchronous {@link PepService2} functions.
  *
  * @param { !String } URL
  * @param { !Number } port
  * @param { !String } imagePath
- * @return { PepService }
+ * @return { PepService2 }
  */
 const pepServices = (URL, port, imagePath) => {
 
   const client = Client(URL, port);
   const devTopic = "webcl/pep/dev";
   const projTopic = "webcl/pep/proj";
+
   client.subscribeToTopic(devTopic);
   client.subscribeToTopic(projTopic);
 
   const loadDevelopers = withDevelopers =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve, _reject) => {
       const sub = client.addListener(devTopic, restDevArray => {
         const devs = JSON.parse(restDevArray)
           .map(toDeveloper(imagePath));
@@ -32,7 +32,7 @@ const pepServices = (URL, port, imagePath) => {
     });
 
   const loadProjects = withProjects =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve, _reject) => {
       const sub = client.addListener(projTopic, json => {
         withProjects(JSON.parse(json).map(toProject));
         resolve(json);

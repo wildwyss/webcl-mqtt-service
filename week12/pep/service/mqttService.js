@@ -14,23 +14,21 @@ export { pepServices }
  */
 const pepServices = (URL, port, imagePath) => {
 
-  const loadDevelopers = withDevelopers => {
-    Client(URL, port, "webcl/pep/dev")
-        .then(  restDevArray => {
-          const devs = JSON.parse(restDevArray)
-            .map( toDeveloper(imagePath) );
-          withDevelopers(devs);
-        })
-        .catch( err => console.error(err));
-  };
+  const loadDevelopers = withDevelopers =>
+      Client(URL, port, "webcl/pep/dev")
+          .then(restDevArray => {
+            const devs = JSON.parse(restDevArray)
+                .map(toDeveloper(imagePath));
+            withDevelopers(devs);
+          })
+          .catch(err => console.error(err));
 
-  const  loadProjects = withProjects => {
-    Client(URL, port, "webcl/pep/proj")
-        .then(json =>
-          withProjects(JSON.parse(json).map(toProject))
-        )
-        .catch( err => console.error(err));
-  };
+  const loadProjects = withProjects =>
+      Client(URL, port, "webcl/pep/proj")
+          .then(json =>
+              withProjects(JSON.parse(json).map(toProject))
+          )
+          .catch(err => console.error(err));
 
   return { loadDevelopers, loadProjects }
 };

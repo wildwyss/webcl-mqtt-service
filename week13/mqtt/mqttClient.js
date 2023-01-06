@@ -37,10 +37,10 @@ const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
  *
  */
 const Client = (URL, port, protocol = "/mqtt") =>{
-  let connected = false;
-  const allListeners = [];
-  const topics = [];
-  const mqttClient = new Paho.MQTT.Client(URL, port, protocol, generateClientId());
+  let connected       = false;
+  const allListeners  = [];
+  const topics        = [];
+  const mqttClient    = new Paho.MQTT.Client(URL, port, protocol, generateClientId());
 
   mqttClient.connect({onSuccess:() => onConnect()});
   const onConnect = () => {
