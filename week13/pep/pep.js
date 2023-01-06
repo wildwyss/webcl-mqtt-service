@@ -66,12 +66,17 @@ const start = (appRootId, devArray, projectsArray, pepService) => {
         needProjector(needController, root);
         staffingProjector(staffingController, root);
 
-        // adding the initial data. dev needs to come first to provide the view hooks
-        devArray.forEach( developer             => developerController.addDeveloper(developer) );
-        pepController.avails.forEach( avail     => availabilityController.addAvailability(avail) );
+        devArray.forEach( developer             => {
+            developerController.addDeveloper(developer);
+            const avail = pepController.avails(developer.id);
+            avail.forEach(availabilityController.addAvailability);
+        });
 
-        projectsArray.forEach( project          => projectController.addProject(project) );
-        pepController.FTEs.forEach( need        => needController.addNeed(need) );
+        projectsArray.forEach( project          =>{
+            projectController.addProject(project);
+            const needs = pepController.need(project.id);
+            needs.forEach(needController.addNeed);
+        });
 
         pepController.assignments.forEach( newAssignmentCommand );
 
@@ -80,7 +85,8 @@ const start = (appRootId, devArray, projectsArray, pepService) => {
             json.forEach(jsonProject => {
                 const proj = toProject(jsonProject);
                 projectController.addProject(proj);
-                FTE(proj.id).forEach(needController.addNeed);
+                const needs = pepController.need(proj.id);
+                needs.forEach(needController.addNeed);
             });
         });
 
@@ -88,8 +94,9 @@ const start = (appRootId, devArray, projectsArray, pepService) => {
             const json = JSON.parse(devs);
             json.forEach(jsonDev => {
                 const dev = toDeveloper(jsonDev);
+                const avail = pepController.avails(dev.id);
                 developerController.addDeveloper(dev);
-                availability(dev.id).forEach(availabilityController.addAvailability)
+                avail.forEach(availabilityController.addAvailability);
             });
         });
         const topicsOverWeeks = document.getElementById(appRootId);
@@ -101,16 +108,3 @@ const start = (appRootId, devArray, projectsArray, pepService) => {
     render();
 };
 
-const availability = devId => [
-    {week:0, devId:devId , avail:100},
-    {week:1, devId:devId , avail:100},
-    {week:2, devId:devId , avail:100},
-    {week:3, devId:devId , avail:0},
-];
-
-const FTE = projId => [
-    {week:0, projId:projId, fte:  0},
-    {week:1, projId:projId, fte: 50},
-    {week:2, projId:projId, fte:100},
-    {week:3, projId:projId, fte:  0},
-];

@@ -11,28 +11,20 @@ const PepController = () => {
         {id: 3, label:'Week 34'},
     ];
 
-
-    const avails = [
-        {week:0, devId:0, avail:70},
-        {week:1, devId:0, avail:70},
-        {week:2, devId:0, avail:100},
-        {week:3, devId:0, avail:100},
-        {week:0, devId:1, avail:100},
-        {week:1, devId:1, avail:100},
-        {week:2, devId:1, avail:100},
-        {week:3, devId:1, avail:0},
+    const avails = devId => [
+        {week:0, devId:devId , avail:100},
+        {week:1, devId:devId , avail:100},
+        {week:2, devId:devId , avail:100},
+        {week:3, devId:devId , avail:0},
     ];
 
-    const FTEs = [
-        {week:0, projId:0, fte:100},
-        {week:1, projId:0, fte:150},
-        {week:2, projId:0, fte:100},
-        {week:3, projId:0, fte:100},
-        {week:0, projId:1, fte:  0},
-        {week:1, projId:1, fte: 50},
-        {week:2, projId:1, fte:100},
-        {week:3, projId:1, fte:  0},
+    const need = projId => [
+        {week:0, projId:projId, fte:  0},
+        {week:1, projId:projId, fte: 50},
+        {week:2, projId:projId, fte:100},
+        {week:3, projId:projId, fte:  0},
     ];
+
     const assignments = [
         { week:0, devId:0, projId:0, amount: 70},
         { week:0, devId:0, projId:1, amount: 30},
@@ -54,7 +46,7 @@ const PepController = () => {
     return {
         addDevs,
         cleanZeroAssignments,
-        weeks, avails, projects, FTEs, assignments, devs
+        weeks, avails, projects, need, assignments, devs
     }
 
 };
