@@ -12,18 +12,10 @@ const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
  * A client to receive data from an MQTT broker.
  * @param  { !String } URL       - Uniform Resource Locator of the endpoint.
  * @param  { !Number } port      - The port, on which the broker is available.
- * @param  { !String } topic     - A topic under which the data are available
  * @param  { String }  protocol  - The protocol used for the communication. Default is "/mqtt".
  * @return { Promise<String> }   - If the request was successful a string containing the data, otherwise an error message
  * @constructor
- * @example
- * Client("broker.hivemq.com", 8000, "test")
- *    .then(  restDevArray => {
- *      restDevArray = JSON.parse(restDevArray.toString());
- *      const devs = restDevArray.map( toDeveloper(imagePath) );
- *      withDevelopers(devs);
- *    })
- *    .catch( err => console.error(err));
+ *
  */
 const Client = (URL, port, protocol = "/mqtt") =>{
   let connected = false;
@@ -34,7 +26,6 @@ const Client = (URL, port, protocol = "/mqtt") =>{
   mqttClient.connect({onSuccess:() => onConnect()});
   const onConnect = () => {
       connected = true;
-      console.log(topics);
       topics.forEach(mqttClient.subscribe)
     };
 

@@ -24,6 +24,7 @@ import {projectProjector} from "./project/projectProjector.js"
 import {NeedController} from "./need/needController.js";
 import {needProjector} from "./need/needProjector.js";
 import {toDeveloper, toProject} from "./service/jsonToModel.js";
+import {imagePath} from "./pepMqttStarter.js";
 
 export { start } ;
 
@@ -93,7 +94,7 @@ const start = (appRootId, devArray, projectsArray, pepService) => {
         pepService.onDevAdded(devs => {
             const json = JSON.parse(devs);
             json.forEach(jsonDev => {
-                const dev = toDeveloper(jsonDev);
+                const dev = toDeveloper(imagePath)(jsonDev, jsonDev.id);
                 const avail = pepController.avails(dev.id);
                 developerController.addDeveloper(dev);
                 avail.forEach(availabilityController.addAvailability);
