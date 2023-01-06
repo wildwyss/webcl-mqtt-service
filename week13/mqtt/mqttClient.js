@@ -3,8 +3,27 @@ import { Paho } from "./lib/paho-mqtt.js";
 export { Client }
 
 /**
+ * @typedef Listener
+ * @property { String }
+ * @property { ListenerCallback }
+ */
+
+/**
+ * @callback ListenerCallback
+ * @param    { !String } topic
+ * @return   { void }
+ */
+
+/**
+ * @typedef MqttClient
+ * @property { (String) => void }                   subscribeToTopic
+ * @property { (Listener) => void }                 removeListener
+ * @property { (s:String, ListenerCallback) => Listener } addListener
+ */
+
+/**
  * Generates a new random clientId.
- * @returns {string}
+ * @returns { String }
  */
 const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
 
@@ -13,7 +32,7 @@ const generateClientId = () => "clientId_webcl" + Math.random() * 1000;
  * @param  { !String } URL       - Uniform Resource Locator of the endpoint.
  * @param  { !Number } port      - The port, on which the broker is available.
  * @param  { String }  protocol  - The protocol used for the communication. Default is "/mqtt".
- * @return { Promise<String> }   - If the request was successful a string containing the data, otherwise an error message
+ * @return { MqttClient }
  * @constructor
  *
  */
@@ -54,9 +73,9 @@ const Client = (URL, port, protocol = "/mqtt") =>{
     };
 
     const addListener = (topic, callback) => {
-      const listener = { topic, callback};
+      const listener = { topic, callback };
       allListeners.push(listener);
-      return listener;
+      return /** @type Listener */ listener;
     };
 
     const onMessageArrived = message =>

@@ -25,7 +25,6 @@ const pepServices = (URL, port, imagePath) => {
       const sub = client.addListener(devTopic, restDevArray => {
         const devs = JSON.parse(restDevArray)
           .map(toDeveloper(imagePath));
-        console.log(devs);
         withDevelopers(devs);
         resolve(restDevArray);
         client.removeListener(sub);
@@ -36,14 +35,13 @@ const pepServices = (URL, port, imagePath) => {
     new Promise((resolve, reject) => {
       const sub = client.addListener(projTopic, json => {
         withProjects(JSON.parse(json).map(toProject));
-        console.log(json);
         resolve(json);
         client.removeListener(sub);
       });
     });
 
-  const onDevAdded = test => client.addListener(devTopic, test);
-  const onProjAdded = test => client.addListener(projTopic, test);
+  const onDevAdded =  listener => client.addListener(devTopic,  listener);
+  const onProjAdded = listener => client.addListener(projTopic, listener);
 
-  return { loadDevelopers, loadProjects, onDevAdded, onProjAdded}
+  return { loadDevelopers, loadProjects, onDevAdded, onProjAdded }
 };

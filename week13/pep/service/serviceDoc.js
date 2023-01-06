@@ -11,5 +11,10 @@ import "../domainDoc.js"
 /**
  * Common interface for all services (abstract factory pattern)
  *
- * @typedef {{loadDevelopers: (function(onDevelopersReadyCallback): undefined)}} PepService
+ * @typedef   PepService
+ * @property { (onDevelopersReadyCallback) => void} loadDevelopers - load the developers and call the callback with them
+ * @property { (onProjectsReadyCallback)   => void} loadProjects   - load the projects and call the callback with them
+ * @property { (ListenerCallback) => Listener } onDevAdded
+ * @property { (ListenerCallback) => Listener } onProjAdded
+ *
  * */
