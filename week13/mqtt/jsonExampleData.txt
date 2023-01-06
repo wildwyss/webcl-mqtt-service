@@ -1,10 +1,10 @@
 This data can be used to create developers and project from a mqtt broker.
 
-Example Developers (saved as revert messages)
+Example Developers (saved as retain messages)
 [{"id":0,"imageUrl":"img/img2.jpg","firstName":"Andri", "lastName":"Wild"},
 {"id":1,"imageUrl":"img/img3.jpg","firstName":"Tobias", "lastName":"Wyss"}]
 
-Example Projects (saved as revert messages)
+Example Projects (saved as retain messages)
 [{"id":0,"color":"red","name":"IP 5"},
 {"id":1,"color":"green","name":"Web Clients MQTT Service"}]
 
